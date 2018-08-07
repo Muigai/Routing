@@ -2577,11 +2577,11 @@ const Header = () => (rahisi_1.React.createElement("header", null,
     rahisi_1.React.createElement("nav", null,
         rahisi_1.React.createElement("ul", null,
             rahisi_1.React.createElement("li", null,
-                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/" }, "Home")),
-            rahisi_1.React.createElement("li", null,
                 rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/roster" }, "Roster")),
             rahisi_1.React.createElement("li", null,
-                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/schedule" }, "Schedule"))))));
+                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/schedule" }, "Schedule")),
+            rahisi_1.React.createElement("li", null,
+                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/" }, "Home"))))));
 const App = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement(Header, null),
     rahisi_1.React.createElement(Main, null)));
