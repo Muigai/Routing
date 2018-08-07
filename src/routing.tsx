@@ -112,9 +112,9 @@ const Header = () => (
     <header>
         <nav>
             <ul>
+                <li><Link href="/">Home</Link></li>
                 <li><Link href="/roster">Roster</Link></li>
                 <li><Link href="/schedule">Schedule</Link></li>
-                <li><Link href="/">Home</Link></li>
             </ul>
         </nav>
     </header>

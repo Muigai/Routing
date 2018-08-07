@@ -1715,7 +1715,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const history_1 = __webpack_require__(/*! history */ "./node_modules/history/es/index.js");
 const pathToRegexp = __webpack_require__(/*! path-to-regexp */ "./node_modules/path-to-regexp/index.js");
 const rahisi_1 = __webpack_require__(/*! rahisi */ "./node_modules/rahisi/dist/forTyping.js");
-const history = history_1.createBrowserHistory();
+const history = history_1.createHashHistory();
 exports.Link = (props, children) => {
     const attributes = rahisi_1.React.getAttributes(props);
     const kids = rahisi_1.React.getChildren(children);
@@ -2091,7 +2091,7 @@ class ConditionalRenderElement {
             if (this.currentSource !== s) {
                 this.currentSource = s;
                 const replacement = this.currentSource().render(document.createDocumentFragment(), watch, isSvg);
-                parent.replaceChild(replacement, this.currentNode);
+                parent.replaceChild(this.currentNode, replacement);
             }
         }, parent);
         parent.appendChild(this.currentNode);
@@ -2577,11 +2577,11 @@ const Header = () => (rahisi_1.React.createElement("header", null,
     rahisi_1.React.createElement("nav", null,
         rahisi_1.React.createElement("ul", null,
             rahisi_1.React.createElement("li", null,
+                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/" }, "Home")),
+            rahisi_1.React.createElement("li", null,
                 rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/roster" }, "Roster")),
             rahisi_1.React.createElement("li", null,
-                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/schedule" }, "Schedule")),
-            rahisi_1.React.createElement("li", null,
-                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/" }, "Home"))))));
+                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/schedule" }, "Schedule"))))));
 const App = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement(Header, null),
     rahisi_1.React.createElement(Main, null)));
