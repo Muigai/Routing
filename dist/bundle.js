@@ -1715,7 +1715,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const history_1 = __webpack_require__(/*! history */ "./node_modules/history/es/index.js");
 const pathToRegexp = __webpack_require__(/*! path-to-regexp */ "./node_modules/path-to-regexp/index.js");
 const rahisi_1 = __webpack_require__(/*! rahisi */ "./node_modules/rahisi/dist/forTyping.js");
-const history = history_1.createHashHistory();
+const history = history_1.createBrowserHistory();
 exports.Link = (props, children) => {
     const attributes = rahisi_1.React.getAttributes(props);
     const kids = rahisi_1.React.getChildren(children);
@@ -2568,7 +2568,7 @@ const Schedule = () => (rahisi_1.React.createElement("div", null,
 const Home = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("h1", null, "Welcome to the Tornadoes Website!")));
 const mainRoutes = [
-    { path: "/", action: () => Home },
+    { path: "/home", action: () => Home },
     { path: "/roster", action: () => Roster },
     { path: "/schedule", action: () => Schedule },
 ];
@@ -2577,7 +2577,7 @@ const Header = () => (rahisi_1.React.createElement("header", null,
     rahisi_1.React.createElement("nav", null,
         rahisi_1.React.createElement("ul", null,
             rahisi_1.React.createElement("li", null,
-                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/" }, "Home")),
+                rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/home" }, "Home")),
             rahisi_1.React.createElement("li", null,
                 rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/roster" }, "Roster")),
             rahisi_1.React.createElement("li", null,
