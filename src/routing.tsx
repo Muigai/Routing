@@ -65,7 +65,7 @@ const errorOccured = () => errorMessage;
 // depending on the full pathname
 const rosterRoutes = [
     {path: "/roster", action: () => FullRoster},
-    {path: "/roster/:number", action: () => Player},
+    {path: "/roster/:number", action: (a: any) => () => Player(a)},
 ];
 const Roster = () => (
     /* should be empty fragment */
