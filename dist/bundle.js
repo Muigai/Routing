@@ -1715,7 +1715,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const history_1 = __webpack_require__(/*! history */ "./node_modules/history/es/index.js");
 const pathToRegexp = __webpack_require__(/*! path-to-regexp */ "./node_modules/path-to-regexp/index.js");
 const rahisi_1 = __webpack_require__(/*! rahisi */ "./node_modules/rahisi/dist/forTyping.js");
-const history = history_1.createBrowserHistory();
+const history = history_1.createHashHistory();
 exports.Link = (props, children) => {
     const attributes = rahisi_1.React.getAttributes(props);
     const kids = rahisi_1.React.getChildren(children);
@@ -1745,6 +1745,7 @@ function matchURI(path, uri) {
 }
 function resolve(routes, noMatch) {
     const uri = history.location.pathname;
+    // console.log(uri);
     for (const route of routes) {
         const params = matchURI(route.path, uri);
         if (!params) {
@@ -2091,11 +2092,10 @@ class ConditionalRenderElement {
             if (this.currentSource !== s) {
                 this.currentSource = s;
                 const replacement = this.currentSource().render(document.createDocumentFragment(), watch, isSvg);
-                parent.replaceChild(this.currentNode, replacement);
+                parent.replaceChild(replacement, this.currentNode);
                 this.currentNode = replacement;
             }
         }, parent);
-        parent.appendChild(this.currentNode);
         return this.currentNode;
     }
 }
@@ -2538,7 +2538,7 @@ const FullRoster = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("ul", null, PlayerAPI.all().map((p) => (rahisi_1.React.createElement("li", null,
         rahisi_1.React.createElement(rahisi_routing_1.Link, { href: `/roster/${p.number}` }, p.name)))))));
 const Player = (props) => {
-    const num = props.get("number");
+    const num = props.has("number") && props.get("number");
     const player = num && PlayerAPI.get(parseInt(num, 10));
     if (!player) {
         return rahisi_1.React.createElement("div", null, "Sorry, but the player was not found");
@@ -2557,8 +2557,8 @@ const Player = (props) => {
 const errorMessage = () => rahisi_1.React.createElement("div", null, "Error Occured");
 const errorOccured = () => errorMessage;
 const rosterRoutes = [
-    { path: "/roster", action: () => FullRoster },
-    { path: "/roster/:number", action: () => Player },
+    { path: "/F:/roster", action: () => FullRoster },
+    { path: "/F:/roster/:number", action: (a) => () => Player(a) },
 ];
 const Roster = () => (rahisi_1.React.createElement("div", null, () => rahisi_routing_1.resolve(rosterRoutes, errorOccured)));
 const Schedule = () => (rahisi_1.React.createElement("div", null,
@@ -2569,9 +2569,9 @@ const Schedule = () => (rahisi_1.React.createElement("div", null,
 const Home = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("h1", null, "Welcome to the Tornadoes Website!")));
 const mainRoutes = [
-    { path: "/home", action: () => Home },
-    { path: "/roster", action: () => Roster },
-    { path: "/schedule", action: () => Schedule },
+    { path: "/F:/home", action: () => Home },
+    { path: "/F:/roster", action: () => Roster },
+    { path: "/F:/schedule", action: () => Schedule },
 ];
 const Main = () => (rahisi_1.React.createElement("main", null, () => rahisi_routing_1.resolve(mainRoutes, errorOccured)));
 const Header = () => (rahisi_1.React.createElement("header", null,
