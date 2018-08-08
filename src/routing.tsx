@@ -1,5 +1,5 @@
 import { React } from "rahisi";
-import { Link, resolve } from "rahisi-routing";
+import { Link, Switch } from "rahisi-routing";
 
 interface Player {
     number: number;
@@ -63,7 +63,6 @@ const errorMessage =
     () => {
         return <div>Error Occured</div>;
     };
-const errorOccured = () => errorMessage;
 
 const Schedule = () => (
     <div>
@@ -73,6 +72,18 @@ const Schedule = () => (
             <li>6/14 @ United</li>
         </ul>
     </div>
+);
+
+// The Roster component matches one of two different routes
+// depending on the full pathname
+const rosterRoutes = [
+    { path: "/roster", action: FullRoster },
+    { path: "/roster/:number", action: (a: Map<string | number, string>) => Player(a) },
+];
+const Roster = () => (
+    <section>
+        {Switch(rosterRoutes, errorMessage())}
+    </section>
 );
 
 const Home = () => (
@@ -86,20 +97,14 @@ const Home = () => (
 // and /schedule routes will match any pathname that starts
 // with /roster or /schedule. The / route will only match
 // when the pathname is exactly the string "/"
-// The Roster component matches one of two different routes
-// depending on the full pathname
-const rosterRoutes = [
-    { path: "/roster", action: () => FullRoster },
-    { path: "/roster/:number", action: (a: any) => () => Player(a) },
-];
 const mainRoutes = [
-    { path: "/", action: () => Home },
-    { path: "/roster", action: () => resolve(rosterRoutes, errorOccured) },
-    { path: "/schedule", action: () => Schedule },
+    { path: "/", action: Home },
+    { path: "/roster", action: Roster },
+    { path: "/schedule", action: Schedule },
 ];
 const Main = () => (
     <main>
-        {() => resolve(mainRoutes, errorOccured)}
+        {Switch(mainRoutes, errorMessage())}
     </main>
 );
 

@@ -1743,19 +1743,21 @@ function matchURI(path, uri) {
     }
     return params;
 }
-function resolve(routes, noMatch) {
+function resolve(route) {
     const uri = history.location.pathname;
-    for (const route of routes) {
-        const params = matchURI(route.path, uri);
-        if (!params) {
-            continue;
-        }
-        const result = route.action(params);
-        return result;
-    }
-    return noMatch();
+    const params = matchURI(route.path, uri);
+    return params;
 }
 exports.resolve = resolve;
+exports.Switch = (routes, noMatch) => {
+    const test = routes.map((a) => {
+        return {
+            test: () => resolve(a) != null,
+            renderable: () => resolve(a) ? a.action(resolve(a)) : noMatch,
+        };
+    });
+    return new rahisi_1.ConditionalRenderElement(test, noMatch);
+};
 //# sourceMappingURL=routing.js.map
 
 /***/ }),
@@ -1896,13 +1898,7 @@ React.appendChild = (kids, child) => {
         kids.push(child);
     }
     else if (typeof child === "function") {
-        const test = child();
-        if (typeof test === "function") {
-            kids.push(new index_1.ConditionalRenderElement(child));
-        }
-        else {
-            kids.push(new index_1.TextElement(child));
-        }
+        kids.push(new index_1.TextElement(child));
     }
     else {
         kids.push(new index_1.TextElement(String(child)));
@@ -2071,10 +2067,12 @@ class BaseElement {
 }
 exports.BaseElement = BaseElement;
 class ConditionalRenderElement {
-    constructor(source) {
+    constructor(source, def) {
         this.source = source;
+        this.def = def;
         this.currentNode = document.createTextNode("");
-        this.currentSource = () => { throw new Error("undefined"); };
+        this.fallback = { test: () => true, renderable: () => def };
+        this.currentSource = source.find((a) => a.test()) || this.fallback;
     }
     mount(parent) {
         const notifier = new Notifier();
@@ -2083,14 +2081,18 @@ class ConditionalRenderElement {
         return v;
     }
     render(parent, watch, isSvg) {
-        this.currentSource = this.source();
-        this.currentNode = this.currentSource().render(parent, watch, isSvg);
+        this.currentNode =
+            this.currentSource
+                .renderable()
+                .render(parent, watch, isSvg);
         const gen = this.source;
         watch.subscribe(() => {
-            const s = gen();
+            const s = gen.find((a) => a.test());
             if (this.currentSource !== s) {
-                this.currentSource = s;
-                const replacement = this.currentSource().render(document.createDocumentFragment(), watch, isSvg);
+                this.currentSource = s || this.fallback;
+                const replacement = this.currentSource
+                    .renderable()
+                    .render(document.createDocumentFragment(), watch, isSvg);
                 parent.replaceChild(replacement, this.currentNode);
                 this.currentNode = replacement;
             }
@@ -2556,24 +2558,24 @@ const Player = (props) => {
 const errorMessage = () => {
     return rahisi_1.React.createElement("div", null, "Error Occured");
 };
-const errorOccured = () => errorMessage;
 const Schedule = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("ul", null,
         rahisi_1.React.createElement("li", null, "6/5 @ Evergreens"),
         rahisi_1.React.createElement("li", null, "6/8 vs Kickers"),
         rahisi_1.React.createElement("li", null, "6/14 @ United"))));
+const rosterRoutes = [
+    { path: "/roster", action: FullRoster },
+    { path: "/roster/:number", action: (a) => Player(a) },
+];
+const Roster = () => (rahisi_1.React.createElement("section", null, rahisi_routing_1.Switch(rosterRoutes, errorMessage())));
 const Home = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("h1", null, "Welcome to the Tornadoes Website!")));
-const rosterRoutes = [
-    { path: "/roster", action: () => FullRoster },
-    { path: "/roster/:number", action: (a) => () => Player(a) },
-];
 const mainRoutes = [
-    { path: "/", action: () => Home },
-    { path: "/roster", action: () => rahisi_routing_1.resolve(rosterRoutes, errorOccured) },
-    { path: "/schedule", action: () => Schedule },
+    { path: "/", action: Home },
+    { path: "/roster", action: Roster },
+    { path: "/schedule", action: Schedule },
 ];
-const Main = () => (rahisi_1.React.createElement("main", null, () => rahisi_routing_1.resolve(mainRoutes, errorOccured)));
+const Main = () => (rahisi_1.React.createElement("main", null, rahisi_routing_1.Switch(mainRoutes, errorMessage())));
 const Header = () => (rahisi_1.React.createElement("header", null,
     rahisi_1.React.createElement("nav", null,
         rahisi_1.React.createElement("ul", null,
