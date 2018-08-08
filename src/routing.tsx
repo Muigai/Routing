@@ -98,7 +98,6 @@ const Home = () => (
 // with /roster or /schedule. The / route will only match
 // when the pathname is exactly the string "/"
 const mainRoutes = [
-    { path: "", action: Home },
     { path: "/", action: Home },
     { path: "/roster/:number?", action: Roster },
     { path: "/schedule", action: Schedule },

@@ -2571,7 +2571,6 @@ const Roster = () => (rahisi_1.React.createElement("section", null, rahisi_routi
 const Home = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("h1", null, "Welcome to the Tornadoes Website!")));
 const mainRoutes = [
-    { path: "", action: Home },
     { path: "/", action: Home },
     { path: "/roster/:number?", action: Roster },
     { path: "/schedule", action: Schedule },
