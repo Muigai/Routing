@@ -59,13 +59,16 @@ const Player = (props: Map<string | number, string>) => {
     );
 };
 
-const errorMessage = () => <div>Error Occured</div>;
+const errorMessage =
+    () => {
+        return <div>Error Occured</div>;
+    };
 const errorOccured = () => errorMessage;
 // The Roster component matches one of two different routes
 // depending on the full pathname
 const rosterRoutes = [
-    {path: "/roster", action: () => FullRoster},
-    {path: "/roster/:number", action: (a: any) => () => Player(a)},
+    { path: "/roster", action: () => FullRoster },
+    { path: "/roster/:number", action: (a: any) => () => Player(a) },
 ];
 const Roster = () => (
     /* should be empty fragment */
@@ -96,9 +99,9 @@ const Home = () => (
 // with /roster or /schedule. The / route will only match
 // when the pathname is exactly the string "/"
 const mainRoutes = [
-    {path: "/", action: () => Home},
-    {path: "/roster", action: () => Roster},
-    {path: "/schedule", action: () => Schedule},
+    { path: "/", action: () => Home },
+    { path: "/roster", action: () => Roster },
+    { path: "/schedule", action: () => Schedule },
 ];
 const Main = () => (
     <main>

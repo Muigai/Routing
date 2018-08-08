@@ -2553,7 +2553,9 @@ const Player = (props) => {
             player.position),
         rahisi_1.React.createElement(rahisi_routing_1.Link, { href: "/roster" }, "Back")));
 };
-const errorMessage = () => rahisi_1.React.createElement("div", null, "Error Occured");
+const errorMessage = () => {
+    return rahisi_1.React.createElement("div", null, "Error Occured");
+};
 const errorOccured = () => errorMessage;
 const rosterRoutes = [
     { path: "/roster", action: () => FullRoster },
