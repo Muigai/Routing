@@ -2557,11 +2557,6 @@ const errorMessage = () => {
     return rahisi_1.React.createElement("div", null, "Error Occured");
 };
 const errorOccured = () => errorMessage;
-const rosterRoutes = [
-    { path: "/roster", action: () => FullRoster },
-    { path: "/roster/:number", action: (a) => () => Player(a) },
-];
-const Roster = () => (rahisi_1.React.createElement("div", null, () => rahisi_routing_1.resolve(rosterRoutes, errorOccured)));
 const Schedule = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("ul", null,
         rahisi_1.React.createElement("li", null, "6/5 @ Evergreens"),
@@ -2569,9 +2564,13 @@ const Schedule = () => (rahisi_1.React.createElement("div", null,
         rahisi_1.React.createElement("li", null, "6/14 @ United"))));
 const Home = () => (rahisi_1.React.createElement("div", null,
     rahisi_1.React.createElement("h1", null, "Welcome to the Tornadoes Website!")));
+const rosterRoutes = [
+    { path: "/roster", action: () => FullRoster },
+    { path: "/roster/:number", action: (a) => () => Player(a) },
+];
 const mainRoutes = [
     { path: "/", action: () => Home },
-    { path: "/roster", action: () => Roster },
+    { path: "/roster", action: () => rahisi_routing_1.resolve(rosterRoutes, errorOccured) },
     { path: "/schedule", action: () => Schedule },
 ];
 const Main = () => (rahisi_1.React.createElement("main", null, () => rahisi_routing_1.resolve(mainRoutes, errorOccured)));

@@ -64,18 +64,6 @@ const errorMessage =
         return <div>Error Occured</div>;
     };
 const errorOccured = () => errorMessage;
-// The Roster component matches one of two different routes
-// depending on the full pathname
-const rosterRoutes = [
-    { path: "/roster", action: () => FullRoster },
-    { path: "/roster/:number", action: (a: any) => () => Player(a) },
-];
-const Roster = () => (
-    /* should be empty fragment */
-    <div>
-        {() => resolve(rosterRoutes, errorOccured)}
-    </div>
-);
 
 const Schedule = () => (
     <div>
@@ -98,9 +86,15 @@ const Home = () => (
 // and /schedule routes will match any pathname that starts
 // with /roster or /schedule. The / route will only match
 // when the pathname is exactly the string "/"
+// The Roster component matches one of two different routes
+// depending on the full pathname
+const rosterRoutes = [
+    { path: "/roster", action: () => FullRoster },
+    { path: "/roster/:number", action: (a: any) => () => Player(a) },
+];
 const mainRoutes = [
     { path: "/", action: () => Home },
-    { path: "/roster", action: () => Roster },
+    { path: "/roster", action: () => resolve(rosterRoutes, errorOccured) },
     { path: "/schedule", action: () => Schedule },
 ];
 const Main = () => (
