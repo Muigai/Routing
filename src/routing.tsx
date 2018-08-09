@@ -82,7 +82,7 @@ const rosterRoutes = [
 ];
 const Roster = () => (
     <section>
-        {Switch(rosterRoutes, errorMessage())}
+        {Switch(rosterRoutes, errorMessage)}
     </section>
 );
 
@@ -104,7 +104,7 @@ const mainRoutes = [
 ];
 const Main = () => (
     <main>
-        {Switch(mainRoutes, errorMessage())}
+        {Switch(mainRoutes, errorMessage)}
     </main>
 );
 
