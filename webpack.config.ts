@@ -2,9 +2,7 @@ import path from "path";
 import webpack from "webpack";
 
 const config: webpack.Configuration = {
-  devtool: false,
   entry: "./src/routing.tsx",
-  mode: "development",
   module: {
     rules: [
       {

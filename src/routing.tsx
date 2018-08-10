@@ -123,10 +123,10 @@ const Header = () => (
 );
 
 const App = () => (
-    <div>
+    <>
         <Header />
         <Main />
-    </div>
+    </>
 );
 
 document.addEventListener("DOMContentLoaded", () => App().mount(document.body), false);
